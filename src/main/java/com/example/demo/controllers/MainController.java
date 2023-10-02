@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 public class MainController {
     @GetMapping("/index")
     public String doSomething() {
-        return "index";
+        return "simple-form";
     }
 
 
