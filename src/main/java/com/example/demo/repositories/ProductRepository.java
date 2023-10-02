@@ -35,4 +35,8 @@ public class ProductRepository {
     public void save(Product product) {
         products.add(product);
     }
+
+    public void remove(Product product) {
+        products.removeIf(p -> p.getTitle().equals(product.getTitle()) );
+    }
 }
