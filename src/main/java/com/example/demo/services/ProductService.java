@@ -26,4 +26,8 @@ public class ProductService {
     public void delete(Product product) {
         productRepository.remove(product);
     }
+
+    public void edit(Product product) {
+        productRepository.edit(product);
+    }
 }

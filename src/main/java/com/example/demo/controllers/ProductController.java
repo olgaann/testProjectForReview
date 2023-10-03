@@ -81,5 +81,11 @@ public class ProductController {
         return "product-page";
     }
 
+    @PostMapping("/edit")
+    public String editProduct(Model model, @ModelAttribute(value = "product")Product product) {
+        productService.edit(product);
+        return "redirect:/products";
+    }
+
 
 }

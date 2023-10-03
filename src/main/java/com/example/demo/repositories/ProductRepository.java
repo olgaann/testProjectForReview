@@ -39,4 +39,16 @@ public class ProductRepository {
     public void remove(Product product) {
         products.removeIf(p -> p.getTitle().equals(product.getTitle()) );
     }
+
+    public void edit(Product product) {
+        Product editedProduct = products.stream().filter(p -> p.getId() == product.getId()).findAny().get();
+        if(product.getTitle() != null)  {
+            editedProduct.setTitle(product.getTitle());
+        }
+
+        if(product.getPrice() != 0)  {
+            editedProduct.setPrice(product.getPrice());
+        }
+
+    }
 }
