@@ -42,13 +42,9 @@ public class ProductRepository {
 
     public void edit(Product product) {
         Product editedProduct = products.stream().filter(p -> p.getId() == product.getId()).findAny().get();
-        if(product.getTitle() != null)  {
-            editedProduct.setTitle(product.getTitle());
-        }
+        editedProduct.setTitle(product.getTitle());
+        editedProduct.setPrice(product.getPrice());
 
-        if(product.getPrice() != 0)  {
-            editedProduct.setPrice(product.getPrice());
-        }
 
     }
 }
