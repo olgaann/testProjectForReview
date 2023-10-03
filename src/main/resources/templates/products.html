@@ -53,7 +53,11 @@
 
     <form th:action="@{/products/filter}" method="get">
         <span>Фильтровать по названию...</span>
-        <input name="filter"/>
+        <input name="filterByName" th:value="${lastFilterByName}"/>
+        </p>
+        <span>Фильтровать по возрастанию/убыванию...</span>
+        <input name="filterUpDown" th:value="${lastFilterUpDown}"/>
+        </p>
         <button type="submit">Отфильтровать</button>
     </form>
 

@@ -17,6 +17,9 @@ public class ProductRepository {
         products.add(new Product(1L, "Хлеб", 40));
         products.add(new Product(2L, "Кефир", 80));
         products.add(new Product(3L, "Молоко", 90));
+        products.add(new Product(4L, "Хлебушек", 50));
+        products.add(new Product(5L, "Хлебцы", 20));
+        products.add(new Product(6L, "Похлебка", 100));
     }
 
     //просто эмулируем работу с базой данных, по факту просто возвращаем products:

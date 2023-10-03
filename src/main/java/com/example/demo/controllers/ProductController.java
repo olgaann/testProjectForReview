@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -27,6 +28,8 @@ public class ProductController {
         Product product = new Product();
         model.addAttribute("products", productService.getAllProducts());
         model.addAttribute("product", product);
+        model.addAttribute("lastFilterByName", "");
+        model.addAttribute("lastFilterUpDown", "");
         return "products";
     }
 
@@ -59,17 +62,25 @@ public class ProductController {
     }
 
     @GetMapping("/filter")
-    public String filter(@RequestParam(value = "filter") String filter, Model model) {
+    public String filter(@RequestParam(value = "filterByName") String filterByName, @RequestParam(value = "filterUpDown") String filterUpDown, Model model) {
         List<Product> filteredList = productService.getAllProducts().stream()
-                        .filter(product -> product.getTitle().toLowerCase().contains(filter.toLowerCase()))
+                        .filter(product -> product.getTitle().toLowerCase().contains(filterByName.toLowerCase()))
                                 .collect(Collectors.toList());
-        for (Product product : filteredList) {
-            System.out.println(product.toString());
-        }
 
+        if (filterUpDown.equals("По возрастанию")) {
+            filteredList = filteredList.stream()
+                    .sorted(Comparator.comparingInt(Product::getPrice))
+                    .collect(Collectors.toList());
+        } else if(filterUpDown.equals("По убыванию")) {
+            filteredList = filteredList.stream()
+                    .sorted(Comparator.comparingInt(Product::getPrice).reversed())
+                    .collect(Collectors.toList());
+        }
 
         model.addAttribute("products", filteredList);
         model.addAttribute("product", new Product());
+        model.addAttribute("lastFilterByName", filterByName);
+        model.addAttribute("lastFilterUpDown", filterUpDown);
         return "products";
     }
 
