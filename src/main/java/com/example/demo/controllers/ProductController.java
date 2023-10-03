@@ -7,6 +7,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
 @Controller
 @RequestMapping("/products")
 public class ProductController {
@@ -24,6 +29,8 @@ public class ProductController {
         model.addAttribute("product", product);
         return "products";
     }
+
+
 
     @GetMapping("/add")
     public String addProduct(Model model) {
@@ -49,6 +56,21 @@ public class ProductController {
     public String deleteProduct(@ModelAttribute(value = "product")Product product) {
         productService.delete(product);
         return "redirect:/products";
+    }
+
+    @GetMapping("/filter")
+    public String filter(@RequestParam(value = "filter") String filter, Model model) {
+        List<Product> filteredList = productService.getAllProducts().stream()
+                        .filter(product -> product.getTitle().toLowerCase().contains(filter.toLowerCase()))
+                                .collect(Collectors.toList());
+        for (Product product : filteredList) {
+            System.out.println(product.toString());
+        }
+
+
+        model.addAttribute("products", filteredList);
+        model.addAttribute("product", new Product());
+        return "products";
     }
 
 

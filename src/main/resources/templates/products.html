@@ -51,7 +51,11 @@
     </form>
 
 
-
+    <form th:action="@{/products/filter}" method="get">
+        <span>Введите название...</span>
+        <input name="filter"/>
+        <button type="submit">Отфильтровать</button>
+    </form>
 
 
 </div>
