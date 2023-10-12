@@ -1,7 +1,7 @@
 package com.example.demo.entities;
 
 public class Product {
-    private long id;
+    private Long id;
     private String title;
     private int price;
 

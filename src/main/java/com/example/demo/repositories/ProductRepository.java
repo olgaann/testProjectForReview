@@ -39,8 +39,8 @@ public class ProductRepository {
         products.add(product);
     }
 
-    public void remove(Product product) {
-        products.removeIf(p -> p.getTitle().equals(product.getTitle()) );
+    public void removeByID(Long id) {
+        products.removeIf(p -> p.getId() == id );
     }
 
     public void edit(Product product) {

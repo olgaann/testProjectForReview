@@ -23,8 +23,8 @@ public class ProductService {
         return productRepository.findByID(id);
     }
 
-    public void delete(Product product) {
-        productRepository.remove(product);
+    public void deleteByID(Long id) {
+        productRepository.removeByID(id);
     }
 
     public void edit(Product product) {

@@ -48,18 +48,8 @@ public class ProductController {
         return "redirect:/products";
     }
 
-    @GetMapping("/delete")
-    public String deleteProduct(Model model) {
-        Product product = new Product();
-        model.addAttribute("product", product);
-        return "delete-form";
-    }
 
-    @PostMapping("/delete")
-    public String deleteProduct(@ModelAttribute(value = "product")Product product) {
-        productService.delete(product);
-        return "redirect:/products";
-    }
+
 
     @GetMapping("/filter")
     public String filter(@RequestParam(value = "filterByName") String filterByName, @RequestParam(value = "filterUpDown") String filterUpDown, Model model) {
@@ -91,6 +81,14 @@ public class ProductController {
         model.addAttribute("product", product);
         return "product-page";
     }
+
+    @GetMapping("/delete/{id}")
+    public String deleteOneProduct(@PathVariable(value = "id") Long id) {
+        productService.deleteByID(id);
+        return "redirect:/products";
+    }
+
+
 
     @PostMapping("/edit")
     public String editProduct(Model model, @ModelAttribute(value = "product")Product product) {
