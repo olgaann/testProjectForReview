@@ -32,7 +32,7 @@
         </tr>
         </tbody>
     </table>
-    <span th:text="${'Всего товаров ' + products.size()}"/>
+<!--    <span th:text="${'Всего товаров ' + products.size()}"/>-->
     <br>
 
 
@@ -55,6 +55,13 @@
         </p>
         <button type="submit">Отфильтровать</button>
     </form>
+
+
+    <a th:href="@{'/products/page/1'}" th:text="1"/>
+    <a th:href="@{'/products/page/2'}" th:text="2"/>
+    <a th:href="@{'/products/page/3'}" th:text="3"/>
+    <a th:href="@{'/products/page/4'}" th:text="4"/>
+    <a th:href="@{'/products/page/5'}" th:text="5"/>
 
 
 </div>

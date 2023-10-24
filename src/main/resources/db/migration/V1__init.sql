@@ -1,5 +1,9 @@
 CREATE TABLE products (id serial, title varchar(100), price int);
 
+CREATE TABLE items (id serial, title varchar(100));
+
+INSERT INTO items (title) VALUES ('box'), ('tree'), ('house');
+
 CREATE TABLE users (
     username VARCHAR(50) NOT NULL,
     password VARCHAR(100) NOT NULL,

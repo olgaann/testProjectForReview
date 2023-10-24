@@ -1,7 +1,7 @@
 package com.example.demo.repositories;
 
 import com.example.demo.entities.Product;
-import jakarta.annotation.PostConstruct;
+import javax.annotation.PostConstruct;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
