@@ -32,10 +32,8 @@
         </tr>
         </tbody>
     </table>
-<!--    <span th:text="${'Всего товаров ' + products.size()}"/>-->
+
     <br>
-
-
     <form th:action="@{/products/add}" method="get" class="form-horizontal">
         <div style="margin-top: 10px" class="form-group">
             <div class="col-sm-6 controls">
@@ -44,27 +42,32 @@
         </div>
     </form>
 
-
-
-    <form th:action="@{/products/filter}" method="get">
+    <form th:action="@{/products}" method="get">
         <span>Фильтровать по названию...</span>
-        <input name="filterByName" th:value="${lastFilterByName}"/>
+        <input th:value="${partOfName != null} ? ${partOfName}" name="partOfName" />
         </p>
-        <span>Фильтровать по возрастанию/убыванию...</span>
-        <input name="filterUpDown" th:value="${lastFilterUpDown}"/>
+        <span>Минимальная цена</span>
+        <input th:value="${minPrice != null} ? ${minPrice}" name="minPrice"/>
+        </p>
+        <span>Максимальная цена</span>
+        <input th:value="${maxPrice != null} ? ${maxPrice}" name="maxPrice"/>
         </p>
         <button type="submit">Отфильтровать</button>
+        <a th:href="@{/products/?page=1&(partOfName=${partOfName}, minPrice=${minPrice}, maxPrice=${maxPrice})}">1</a>
+        <a th:href="@{/products/?page=2&(partOfName=${partOfName}, minPrice=${minPrice}, maxPrice=${maxPrice})}">2</a>
+        <a th:href="@{/products/?page=3&(partOfName=${partOfName}, minPrice=${minPrice}, maxPrice=${maxPrice})}">3</a>
+        <a th:href="@{/products/?page=4&(partOfName=${partOfName}, minPrice=${minPrice}, maxPrice=${maxPrice})}">4</a>
+        <a th:href="@{/products/?page=5&(partOfName=${partOfName}, minPrice=${minPrice}, maxPrice=${maxPrice})}">5</a>
+
+
+<!--        <a th:href="@{/hello(param=${name})}">link</a>-->
+
+<!--        <a th:href="@{/products/?page=1&minPrice=100&maxPrice=6000}">1</a>-->
+<!--        <a th:href="@{/products/?page=2&minPrice=100&maxPrice=6000}">2</a>-->
+<!--        <a th:href="@{/products/?page=3&minPrice=100&maxPrice=6000}">3</a>-->
+<!--        <a th:href="@{/products/?page=4&minPrice=100&maxPrice=6000}">4</a>-->
+<!--        <a th:href="@{/products/?page=5&minPrice=100&maxPrice=6000}">5</a>-->
     </form>
-
-
-    <a th:href="@{'/products/page/1'}" th:text="1"/>
-    <a th:href="@{'/products/page/2'}" th:text="2"/>
-    <a th:href="@{'/products/page/3'}" th:text="3"/>
-    <a th:href="@{'/products/page/4'}" th:text="4"/>
-    <a th:href="@{'/products/page/5'}" th:text="5"/>
-
-
 </div>
-
 </body>
 </html>

@@ -8,6 +8,7 @@ import com.example.demo.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,12 +27,31 @@ public class ProductController {
     private ProductService productService;
 
     @GetMapping
-    public String showProductsList(Model model) {
-        Product product = new Product();
-        model.addAttribute("products", productService.getAllProducts());
-        //model.addAttribute("product", product);
-        model.addAttribute("lastFilterByName", "");
-        model.addAttribute("lastFilterUpDown", "");
+    public String showProductsList(Model model,
+                                   @RequestParam(value = "page", required = false) Integer page,
+                                   @RequestParam(value = "partOfName", required = false) String partOfName,
+                                   @RequestParam(value = "minPrice", required = false) Integer minPrice,
+                                   @RequestParam(value = "maxPrice", required = false) Integer maxPrice)
+    {
+        if(page == null) {
+            page = 1;
+        }
+
+        Specification<Product> filter = Specification.where(null);
+        if(partOfName != null) {
+            filter = filter.and(ProductSpecs.titleContains(partOfName));
+        }
+        if(minPrice != null) {
+            filter = filter.and(ProductSpecs.priceGreaterThanOrEq(minPrice));
+        }
+        if(maxPrice != null) {
+            filter = filter.and(ProductSpecs.priceLessThanOrEq(maxPrice));
+        }
+
+        model.addAttribute("products", productService.getProductsWithPagingAndFiltering(filter, PageRequest.of(page - 1, 7)).getContent());
+        model.addAttribute("partOfName", partOfName);
+        model.addAttribute("minPrice", minPrice);
+        model.addAttribute("maxPrice", maxPrice);
         return "products";
     }
 
@@ -71,35 +91,6 @@ public class ProductController {
         return "redirect:/products";
     }
 
-    @GetMapping("/page/{number}")
-    public String showPage(Model model, @PathVariable(value = "number") int number) {
-        Page<Product> products = productService.getProductsPage(number);
-
-        model.addAttribute("products", products);
-        return "products";
-    }
-
-
-    @GetMapping("/filter")
-    public String filter(@RequestParam(value = "filterByName") String filterByName, @RequestParam(value = "filterUpDown") String filterUpDown, Model model) {
-        Specification<Product> filter = Specification.where(null);
-        filter = filter.and(ProductSpecs.titleContains(filterByName));
-
-        List<Product> resultList = productService.getProductsContainsWord(filter, filterUpDown);
-        model.addAttribute("products", resultList);
-        model.addAttribute("lastFilterByName", filterByName);
-        model.addAttribute("lastFilterUpDown", filterUpDown);
-        return "products";
-    }
-
-
-
-
-
-
-
-
-
-
+  
 
 }

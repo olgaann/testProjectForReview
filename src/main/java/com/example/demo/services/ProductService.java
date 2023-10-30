@@ -5,9 +5,11 @@ import com.example.demo.entities.Product;
 import com.example.demo.repositories.ProductRep;
 import com.example.demo.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
@@ -26,9 +28,10 @@ public class ProductService {
         return productRep.findAll();
     }
 
-    public Page<Product> getProductsPage(int pageNumber) {
-        return productRep.findAll(PageRequest.of(pageNumber  - 1, 2));
+    public Page<Product> getProductsWithPagingAndFiltering(Specification<Product> specs, Pageable pageable) {
+        return productRep.findAll(specs, pageable);
     }
+
     public Long getLastId() {
         return productRep.findLastId();
     }
@@ -48,13 +51,5 @@ public class ProductService {
         productRep.updateProductTitle(product);
     }
 
-    public List<Product> getProductsContainsWord(Specification<Product> specs, String filterUpDown) {
-        List<Product> resultList = productRep.findAll(specs);
-        if(filterUpDown.equals("По возрастанию")) {
-            resultList = resultList.stream().sorted(Comparator.comparingInt(Product::getPrice)).collect(Collectors.toList());
-        } else if(filterUpDown.equals("По убыванию")) {
-            resultList = resultList.stream().sorted(Comparator.comparingInt(Product::getPrice).reversed()).collect(Collectors.toList());
-        }
-        return resultList;
-    }
+
 }

@@ -1,7 +1,12 @@
 package com.example.demo.entities;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 
+@Data
+@NoArgsConstructor
 @Entity
 @Table(name = "products", schema = "boot")
 public class Product {
@@ -14,12 +19,9 @@ public class Product {
     @Column(name = "price")
     private int price;
 
-    public long getId() {
-        return id;
-    }
 
-    public Product() {
-    }
+
+
 
     public Product(long id, String title, int price) {
         this.id = id;
@@ -27,25 +29,7 @@ public class Product {
         this.price = price;
     }
 
-    public void setId(long id) {
-        this.id = id;
-    }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public int getPrice() {
-        return price;
-    }
-
-    public void setPrice(int price) {
-        this.price = price;
-    }
 
     @Override
     public String toString() {

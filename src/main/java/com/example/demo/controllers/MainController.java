@@ -15,8 +15,8 @@ public class MainController {
 
     @GetMapping("/hello")
      //@ResponseBody //эта аннотация вернет java-объект
-    public String helloRequest(Model model, @RequestParam(value = "name") String name2) {
-        model.addAttribute("name", name2);
+    public String helloRequest(Model model, @RequestParam(value = "name", required = false) String name) {
+        model.addAttribute("name", name);
         return "hello";
     }
 

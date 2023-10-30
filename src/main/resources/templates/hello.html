@@ -9,5 +9,8 @@
 </head>
 <body>
 <span th:text="${'Hello, ' + name}"/>
+
+<a th:href="@{/hello(param=${name})}">link</a>
+
 </body>
 </html>
