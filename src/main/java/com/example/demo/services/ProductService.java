@@ -48,7 +48,14 @@ public class ProductService {
 
 
     public void edit(Product product) {
-        productRep.updateProductTitle(product);
+        productRep.updateProduct(product);
+    }
+
+    public void printThreeMostPopularProducts() {
+        productRep.findAll().stream()
+                .sorted(Comparator.comparingInt(Product::getQty).reversed())
+                .limit(3)
+                .forEach(System.out::println);
     }
 
 

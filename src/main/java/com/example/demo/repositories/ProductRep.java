@@ -31,7 +31,7 @@ public interface ProductRep extends JpaRepository<Product, Long>, PagingAndSorti
     //добавляй @Transactional при UPDATE
     @Transactional
     @Modifying
-    @Query("UPDATE Product p SET p.title = :#{#product.getTitle()}, p.price = :#{#product.getPrice()} WHERE p.id = :#{#product.getId()}")
-    void updateProductTitle(@Param("product") Product product);
+    @Query("UPDATE Product p SET p.title = :#{#product.getTitle()}, p.price = :#{#product.getPrice()}, p.qty = :#{#product.getQty()} WHERE p.id = :#{#product.getId()}")
+    void updateProduct(@Param("product") Product product);
 
 }

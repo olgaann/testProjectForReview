@@ -18,15 +18,15 @@ public class Product {
     private String title;
     @Column(name = "price")
     private int price;
-
-
-
+    @Column(name = "qty")
+    private int qty;
 
 
     public Product(long id, String title, int price) {
         this.id = id;
         this.title = title;
         this.price = price;
+        this.qty = 0;
     }
 
 

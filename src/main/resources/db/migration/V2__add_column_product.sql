@@ -1,0 +1,1 @@
+ALTER TABLE products ADD COLUMN qty int DEFAULT 0;

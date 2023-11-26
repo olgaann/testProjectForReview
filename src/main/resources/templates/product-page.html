@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
 <head>
     <meta charset="utf-8"/>
     <title>Каталог товаров</title>
@@ -17,7 +18,7 @@
 
 <form th:action="@{/products/edit}"  th:object="${product}" method="post" class="form-horizontal">
 
-    <span>Вы можете отредактировать карточку товара</span>
+    <span sec:authorize="hasRole('ADMIN')">Вы можете отредактировать карточку товара</span>
 
     <div style="margin-bottom: 25px" class="input-group">
         <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
@@ -36,7 +37,7 @@
 
     <div style="margin-top: 10px" class="form-group">
         <div class="col-sm-6 controls">
-            <button type="submit" class="btn btn-primary">Редактировать</button>
+            <button sec:authorize="hasRole('ADMIN')" type="submit" class="btn btn-primary">Редактировать</button>
         </div>
     </div>
 </form>
