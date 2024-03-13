@@ -17,7 +17,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableGlobalMethodSecurity(securedEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
 
 
@@ -28,57 +28,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
     }
 
 
-//    @Override
-//    protected void configure(HttpSecurity httpSecurity) throws Exception {
-//        httpSecurity
-//                .csrf()
-//                .disable()
-//                .authorizeRequests()
-//                .antMatchers("/products").permitAll()
-//                //Доступ только для не зарегистрированных пользователей
-//                .antMatchers("/registration").not().fullyAuthenticated()
-//                //Доступ только для пользователей с ролью Администратор
-//                .antMatchers("/admin/**").hasRole("ADMIN")
-//                .antMatchers("/news").hasRole("USER")
-//                //Доступ разрешен всем пользователей
-//                .antMatchers("/", "/resources/**").permitAll()
-//                //Все остальные страницы требуют аутентификации
-//                .anyRequest().authenticated()
-//                .and()
-//                //Настройка для входа в систему
-//                .formLogin()
-//                .loginPage("/login")
-//                //Перенарпавление на главную страницу после успешного входа
-//                .defaultSuccessUrl("/")
-//                .permitAll()
-//                .and()
-//                .logout()
-//                .permitAll()
-//                .logoutSuccessUrl("/");
-//    }
 
-
-//    @Override
-//    protected void configure(HttpSecurity http) throws Exception {
-//        http
-//                .authorizeRequests()
-//                .antMatchers("/products").permitAll()
-//                .anyRequest().authenticated()
-//                .and()
-//                .formLogin()
-//                .loginPage("/login")
-//                .permitAll()
-//                .and()
-//                .logout()
-//                .permitAll();
-//    }
 
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/products/add/**").hasAnyRole("ADMIN")
-                .antMatchers("/products/edit/**").hasAnyRole( "ADMIN")
+//                .antMatchers("/products/add/**").hasAnyRole("ADMIN")
+//                .antMatchers("/products/edit/**").hasAnyRole( "ADMIN")
+                // здесь защита выше идет через @secured к соотв. методам
                 .and()
                 .formLogin()
                 .loginProcessingUrl("/authorization")

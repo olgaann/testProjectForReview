@@ -8,5 +8,5 @@ import org.springframework.stereotype.Service;
 
 @Component
 public interface UserService extends UserDetailsService {
-    User findByUserName(String username);
+   User findByUserName(String username);
 }

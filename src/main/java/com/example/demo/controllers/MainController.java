@@ -1,14 +1,26 @@
 package com.example.demo.controllers;
 
+import com.example.demo.entities.ItemProjection;
+import com.example.demo.repositories.ItemRepository;
+import com.example.demo.repositories.ProductRep;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 //@RequestMapping("/main")
 public class MainController {
+
+    @Autowired
+    ItemRepository itemRepository;
+
     @GetMapping("/index")
     public String doSomething() {
+        List<ItemProjection> list = itemRepository.findItemsProjectionsByCost(10);
+        list.stream().map(itemProjection -> itemProjection.getTitle() + " " + itemProjection.getCost()).forEach(System.out::println);
         return "simple-form";
     }
 

@@ -37,7 +37,8 @@ public class UserServiceImpl implements UserService{
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findOneByUsername(username);
+        //User user = userRepository.findOneByUsername(username);
+        User user = findByUserName(username);
         if (user == null) {
             throw new UsernameNotFoundException("Invalid username or password");
         }
@@ -49,4 +50,6 @@ public class UserServiceImpl implements UserService{
     private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles) {
         return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
     }
+
+
 }

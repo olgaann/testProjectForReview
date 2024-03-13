@@ -52,10 +52,17 @@ public class ProductService {
     }
 
     public void printThreeMostPopularProducts() {
-        productRep.findAll().stream()
-                .sorted(Comparator.comparingInt(Product::getQty).reversed())
-                .limit(3)
-                .forEach(System.out::println);
+        System.out.println("Три самых частопросматриваемых товара: ");
+//        List<Product> popularList = productRep.findThreeMostPopularProducts();
+//        List<Product> top3List = popularList.subList(0, Math.min(3, popularList.size()));
+//        System.out.println(top3List);
+        System.out.println(productRep.findTop3ByOrderByQtyDesc());
+    }
+
+    public void incrementQty(Product product) {
+        int qty = product.getQty();
+        product.setQty(++qty);
+        this.edit(product);
     }
 
 

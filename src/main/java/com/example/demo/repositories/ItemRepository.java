@@ -36,4 +36,6 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
     List<Item> myMethod();
 
     //List<ItemProjection> getProjections();
+    List<ItemProjection> findItemsProjectionsByTitle(String title);
+    List<ItemProjection> findItemsProjectionsByCost(int cost);
 }

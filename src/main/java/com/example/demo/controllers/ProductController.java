@@ -3,6 +3,7 @@ package com.example.demo.controllers;
 import com.example.demo.entities.Item;
 import com.example.demo.entities.Product;
 import com.example.demo.entities.Role;
+
 import com.example.demo.entities.User;
 import com.example.demo.repositories.specifications.ItemSpecs;
 import com.example.demo.repositories.specifications.ProductSpecs;
@@ -13,6 +14,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -63,7 +65,7 @@ public class ProductController {
             System.out.println("Никто не авторизован");
         }
 
-        System.out.println("Три самых частопросматриваемых товара: ");
+
         productService.printThreeMostPopularProducts();
 
         model.addAttribute("products", productService.getProductsWithPagingAndFiltering(filter, PageRequest.of(page - 1, 7)).getContent());
@@ -92,11 +94,10 @@ public class ProductController {
     }
 
     @GetMapping("/show/{id}")
+    @Secured("ROLE_ADMIN")
     public String showOneProduct(Model model, @PathVariable(value = "id") Long id) {
         Product product = productService.getByID(id);
-        int qty = product.getQty();
-        product.setQty(++qty);
-        productService.edit(product);
+        productService.incrementQty(product);
         model.addAttribute("product", product);
         return "product-page";
     }
@@ -105,15 +106,6 @@ public class ProductController {
     @Secured("ROLE_ADMIN")
     public String editProduct(Principal principal, @ModelAttribute(value = "product")Product product) {
         productService.edit(product);
-//        if (principal != null) {
-//            User currentUser = userService.findByUserName(principal.getName());
-//            Collection<Role> roles = currentUser.getRoles();
-//            boolean containsAdminRole = roles.stream()
-//                    .anyMatch(role -> role.getName().equals("ROLE_ADMIN"));
-//            if(containsAdminRole) {
-//                productService.edit(product);
-//            }
-//        }
         return "redirect:/products";
     }
 
@@ -123,6 +115,19 @@ public class ProductController {
         return "redirect:/products";
     }
 
-  
+    @GetMapping("/{id}")
+    @ResponseBody
+    public Product getProductById(@PathVariable(value = "id") Long id) {
+        return productService.getByID(id);
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseBody
+    public int deleteProductById(@PathVariable(value = "id") Long id) {
+        productService.deleteByID(id);
+        return 200;
+    }
+
+
 
 }

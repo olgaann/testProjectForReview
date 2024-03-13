@@ -4,6 +4,6 @@ package com.example.demo.entities;
 //далее идем в ItemRepository
 
 public interface ItemProjection {
-    String title();
-    int cost();
+    String getTitle();
+    int getCost();
 }
